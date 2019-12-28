@@ -20,18 +20,16 @@ class Model_Company extends Model_Abstract {
         'seo_description',
         'seo_image',
         'seo_keyword',
-        'email',
-        'tel',
-        'address',
         'facebook',
         'youtube',
-        'instagram',
-        'zalo',
-        'google_plus',
         'twitter',
         'script_header',
         'script_body',
         'script_footer',
+        'author_name',
+        'author_logo',
+        'author_description',
+        'footer_description',
         'created',
         'updated'
     );
@@ -76,6 +74,7 @@ class Model_Company extends Model_Abstract {
             }
             $param['logo'] = !empty($uploadResult['body']['logo']) ? $uploadResult['body']['logo'] : '';
             $param['seo_image'] = !empty($uploadResult['body']['seo_image']) ? $uploadResult['body']['seo_image'] : '';
+            $param['author_logo'] = !empty($uploadResult['body']['author_logo']) ? $uploadResult['body']['author_logo'] : '';
         }
         
         // Set data
@@ -84,12 +83,6 @@ class Model_Company extends Model_Abstract {
         }
         if (isset($param['logo'])) {
             $self->set('logo', $param['logo']);
-        }
-        if (isset($param['address'])) {
-            $self->set('address', $param['address']);
-        }
-        if (isset($param['tel'])) {
-            $self->set('tel', $param['tel']);
         }
         if (isset($param['seo_image'])) {
             $self->set('seo_image', $param['seo_image']);
@@ -106,20 +99,8 @@ class Model_Company extends Model_Abstract {
         if (isset($param['twitter'])) {
             $self->set('twitter', $param['twitter']);
         }
-        if (isset($param['instagram'])) {
-            $self->set('instagram', $param['instagram']);
-        }
-        if (isset($param['google_plus'])) {
-            $self->set('google_plus', $param['google_plus']);
-        }
         if (isset($param['youtube'])) {
             $self->set('youtube', $param['youtube']);
-        }
-        if (isset($param['email'])) {
-            $self->set('email', $param['email']);
-        }
-        if (isset($param['zalo'])) {
-            $self->set('zalo', $param['zalo']);
         }
         if (isset($param['script_header'])) {
             $self->set('script_header', $param['script_header']);
@@ -129,6 +110,18 @@ class Model_Company extends Model_Abstract {
         }
         if (isset($param['script_footer'])) {
             $self->set('script_footer', $param['script_footer']);
+        }
+        if (isset($param['author_name'])) {
+            $self->set('author_name', $param['author_name']);
+        }
+        if (isset($param['author_logo'])) {
+            $self->set('author_logo', $param['author_logo']);
+        }
+        if (isset($param['author_description'])) {
+            $self->set('author_description', $param['author_description']);
+        }
+        if (isset($param['footer_description'])) {
+            $self->set('footer_description', $param['footer_description']);
         }
         
         // Save data

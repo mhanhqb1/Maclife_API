@@ -145,14 +145,11 @@ class Model_Setting extends Model_Abstract {
         $posts = DB::select('*')->from('posts')->where('disable', 0)->execute();
         $result['post_count'] = count($posts);
         
-        $products = DB::select('*')->from('products')->where('disable', 0)->execute();
-        $result['product_count'] = count($products);
+        $products = DB::select('*')->from('cates')->where('disable', 0)->execute();
+        $result['cate_count'] = count($products);
         
-        $orders = DB::select('*')->from('orders')->where('disable', 0)->execute();
-        $result['order_count'] = count($orders);
-        
-        $contacts = DB::select('*')->from('contacts')->execute();
-        $result['contact_count'] = count($contacts);
+//        $orders = DB::select('*')->from('tags')->where('disable', 0)->execute();
+//        $result['tag_count'] = count($orders);
         
         // Return
         return $result;
