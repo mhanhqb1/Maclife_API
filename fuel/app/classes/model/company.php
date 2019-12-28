@@ -81,10 +81,10 @@ class Model_Company extends Model_Abstract {
         if (isset($param['name'])) {
             $self->set('name', $param['name']);
         }
-        if (isset($param['logo'])) {
+        if (!empty($param['logo'])) {
             $self->set('logo', $param['logo']);
         }
-        if (isset($param['seo_image'])) {
+        if (!empty($param['seo_image'])) {
             $self->set('seo_image', $param['seo_image']);
         }
         if (isset($param['seo_description'])) {
@@ -114,7 +114,7 @@ class Model_Company extends Model_Abstract {
         if (isset($param['author_name'])) {
             $self->set('author_name', $param['author_name']);
         }
-        if (isset($param['author_logo'])) {
+        if (!empty($param['author_logo'])) {
             $self->set('author_logo', $param['author_logo']);
         }
         if (isset($param['author_description'])) {
