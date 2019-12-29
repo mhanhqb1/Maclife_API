@@ -17,7 +17,7 @@ class Model_Tag extends Model_Abstract {
         'id',
         'name',
         'slug',
-        'total_product',
+        'total_post',
         'created'
     );
 
