@@ -17,12 +17,15 @@ class Model_Post extends Model_Abstract {
         'id',
         'cate_id',
         'name',
-        'url',
+        'slug',
         'image',
         'description',
         'detail',
         'seo_keyword',
         'seo_description',
+        'total_like',
+        'total_dislike',
+        'total_view',
         'created',
         'updated',
         'disable'
@@ -133,7 +136,7 @@ class Model_Post extends Model_Abstract {
         $query = DB::select(
                 self::$_table_name.'.*',
                 array('cates.name', 'cate_name'),
-                array('cates.url', 'cate_url')
+                array('cates.slug', 'cate_slug')
             )
             ->from(self::$_table_name)
             ->join('cates', 'left')
@@ -212,7 +215,7 @@ class Model_Post extends Model_Abstract {
         $query = DB::select(
                 self::$_table_name.'.*',
                 array('cates.name', 'cate_name'),
-                array('cates.url', 'cate_url')
+                array('cates.slug', 'cate_slug')
             )
             ->from(self::$_table_name)
             ->join('cates', 'LEFT')
@@ -291,10 +294,10 @@ class Model_Post extends Model_Abstract {
         // Init
         $adminId = !empty($param['admin_id']) ? $param['admin_id'] : '';
         
-        if (!empty($param['cate_url'])) {
+        if (!empty($param['cate_slug'])) {
             $cate = Model_Cate::find('first', array(
                 'where' => array(
-                    'url' => $param['cate_url']
+                    'slug' => $param['cate_slug']
                 )
             ));
             if (!empty($cate['id'])) {
@@ -306,7 +309,7 @@ class Model_Post extends Model_Abstract {
         $query = DB::select(
                 self::$_table_name.'.*',
                 array('cates.name', 'cate_name'),
-                array('cates.url', 'cate_url')
+                array('cates.slug', 'cate_slug')
             )
             ->from(self::$_table_name)
             ->join('cates', 'LEFT')
@@ -392,7 +395,7 @@ class Model_Post extends Model_Abstract {
         $result['posts'] = DB::select(
                 self::$_table_name.'.*',
                 array('cates.name', 'cate_name'),
-                array('cates.url', 'cate_url')
+                array('cates.slug', 'cate_slug')
             )
             ->from(DB::expr("
                 (
