@@ -59,12 +59,7 @@ class Model_Setting extends Model_Abstract {
         $result['company'] = Model_Company::find('first');
         
         // Get cates
-        $result['product_cates'] = Model_Cate::get_all(array(
-            'type' => 1
-        ));
-        $result['blog_cates'] = Model_Cate::get_all(array(
-            'type' => 2
-        ));
+        $result['cates'] = Model_Cate::get_all(array());
                 
         // Return
         return $result;
@@ -81,50 +76,6 @@ class Model_Setting extends Model_Abstract {
     {
         // Init
         $result = array();
-        
-        // Get company info
-        $result['sliders'] = Model_Banner::get_all(array());
-        
-        // Get hot product
-        $result['hot_products'] = Model_Product::get_all(array(
-            'is_hot' => 1,
-            'page' => 1,
-            'limit' => 12
-        ));
-        // Get posts data
-        $result['cate_products'] = DB::select(
-                'products.*',
-                array('cates.name', 'cate_name'),
-                array('cates.url', 'cate_url')
-            )
-            ->from(DB::expr("
-                (
-                    SELECT
-			products.*,
-			@rn :=
-                            IF (@prev = cate_id, @rn + 1, 1) AS rn,
-                        @prev := cate_id
-                    FROM
-                        products
-                    JOIN (SELECT @prev := NULL, @rn := 0) AS vars
-                    WHERE
-                        disable = 0
-                    ORDER BY
-                        cate_id
-                ) AS products
-            "))
-            ->join('cates', 'LEFT')
-            ->on('cates.id', '=', 'products.cate_id')
-            ->where(DB::expr("rn <= 10"))
-            ->execute()
-            ->as_array()
-        ;
-        
-        // Get news
-        $result['posts'] = Model_Post::get_all(array(
-            'page' => 1,
-            'limit' => 12
-        ));
                 
         // Return
         return $result;
