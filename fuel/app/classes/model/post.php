@@ -84,7 +84,7 @@ class Model_Post extends Model_Abstract {
         // Set data
         if (!empty($param['name'])) {
             $self->set('name', $param['name']);
-            $self->set('url', \Lib\Str::convertURL($param['name']));
+            $self->set('slug', \Lib\Str::convertURL($param['name']));
         }
         if (!empty($param['cate_id'])) {
             $self->set('cate_id', $param['cate_id']);
