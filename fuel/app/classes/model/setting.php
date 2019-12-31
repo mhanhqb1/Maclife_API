@@ -76,6 +76,7 @@ class Model_Setting extends Model_Abstract {
     {
         // Init
         $result = array();
+        $result['home_posts'] = Model_Post::get_list($param);
                 
         // Return
         return $result;
