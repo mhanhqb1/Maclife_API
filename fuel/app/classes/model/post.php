@@ -148,6 +148,9 @@ class Model_Post extends Model_Abstract {
         if (!empty($param['name'])) {
             $query->where(self::$_table_name.'.name', 'LIKE', "%{$param['name']}%");
         }
+        if (!empty($param['s'])) {
+            $query->where(self::$_table_name.'.name', 'LIKE', "%{$param['s']}%");
+        }
         if (!empty($param['cate_id'])) {
             if (!is_array($param['cate_id'])) {
                 $param['cate_id'] = explode(',', $param['cate_id']);
