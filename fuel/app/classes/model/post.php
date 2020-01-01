@@ -131,6 +131,7 @@ class Model_Post extends Model_Abstract {
     {
         // Init
         $adminId = !empty($param['admin_id']) ? $param['admin_id'] : '';
+        $tags = array();
         
         // Query
         $query = DB::select(
@@ -193,10 +194,19 @@ class Model_Post extends Model_Abstract {
             ));
         }
         
+        if (!empty($param['get_tags'])) {
+            $tags = Model_Tag::get_all(array(
+                'limit' => 10,
+                'page' => 1,
+                'sort' => 'total_post-desc'
+            ));
+        }
+        
         return array(
             'total' => $total,
             'data' => $data,
-            'new_posts' => $newPosts
+            'new_posts' => $newPosts,
+            'tags' => $tags
         );
     }
     

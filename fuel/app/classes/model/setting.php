@@ -64,6 +64,7 @@ class Model_Setting extends Model_Abstract {
         // Get top like
         $result['top_like_posts'] = Model_Post::get_all(array(
             'limit' => 4,
+            'page' => 1,
             'sort' => 'total_like-desc'
         ));
                 
@@ -85,6 +86,7 @@ class Model_Setting extends Model_Abstract {
         $result['home_posts'] = Model_Post::get_list($param);
         $result['home_tags'] = Model_Tag::get_all(array(
             'limit' => 10,
+            'page' => 1,
             'sort' => 'total_post-desc'
         ));
                 
@@ -107,11 +109,11 @@ class Model_Setting extends Model_Abstract {
         $posts = DB::select('*')->from('posts')->where('disable', 0)->execute();
         $result['post_count'] = count($posts);
         
-        $products = DB::select('*')->from('cates')->where('disable', 0)->execute();
-        $result['cate_count'] = count($products);
+        $cates = DB::select('*')->from('cates')->where('disable', 0)->execute();
+        $result['cate_count'] = count($cates);
         
-//        $orders = DB::select('*')->from('tags')->where('disable', 0)->execute();
-//        $result['tag_count'] = count($orders);
+        $tags = DB::select('*')->from('tags')->where('disable', 0)->execute();
+        $result['tag_count'] = count($tags);
         
         // Return
         return $result;
