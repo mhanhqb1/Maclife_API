@@ -254,6 +254,22 @@ class Model_Post extends Model_Abstract {
             ));
         }
         
+        if (!empty($param['get_top_like_posts'])) {
+            $data['top_like_posts'] = self::get_all(array(
+                'limit' => 5,
+                'page' => 1,
+                'sort' => 'total_like-desc'
+            ));
+        }
+        
+        if (!empty($param['get_tags'])) {
+            $data['top_tags'] = Model_Tag::get_all(array(
+                'limit' => 10,
+                'page' => 1,
+                'sort' => 'total_post-desc'
+            ));
+        }
+        
         return $data;
     }
     
