@@ -429,4 +429,25 @@ class Model_Post extends Model_Abstract {
         // Return data
         return $result;
     }
+    
+    /**
+     * Add view
+     *
+     * @author AnhMH
+     * @param array $param Input data
+     * @return array|bool
+     */
+    public static function add_view($param)
+    {
+        $id = !empty($param['id']) ? $param['id'] : '';
+        if (!empty($id)) {
+            $post = self::find($id);
+            if (!empty($post)) {
+                $view = $post['total_view'] + 1;
+                $post->set('total_view', $view);
+                $post->save();
+            }
+        }
+        return true;
+    }
 }

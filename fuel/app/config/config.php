@@ -333,6 +333,7 @@ return array(
             'posts/all',
             'posts/list',
             'posts/detail',
+            'posts/addview',
             'orders/addupdate',
             'contacts/addupdate',
             'pages/detail'

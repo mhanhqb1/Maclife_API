@@ -52,4 +52,11 @@ class Controller_Posts extends \Controller_App {
     public function action_gethomedata() {
         return \Bus\Posts_GetHomeData::getInstance()->execute();
     }
+    
+    /**
+     * Get home data
+     */
+    public function action_addview() {
+        return \Bus\Posts_AddView::getInstance()->execute();
+    }
 }
