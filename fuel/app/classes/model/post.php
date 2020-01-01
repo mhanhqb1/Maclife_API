@@ -114,6 +114,15 @@ class Model_Post extends Model_Abstract {
             if (empty($self->id)) {
                 $self->id = self::cached_object($self)->_original['id'];
             }
+            if (!empty($param['tag'])) {
+                $tags = explode(',', $param['tag']);
+                foreach ($tags as $t) {
+                    Model_Post_Tag::add_update(array(
+                        'name' => trim($t),
+                        'post_id' => $self->id
+                    ));
+                }
+            }
             return $self->id;
         }
         
@@ -244,7 +253,22 @@ class Model_Post extends Model_Abstract {
             self::errorNotExist('post_id');
             return false;
         }
-        
+        $tags = DB::select(
+                'tags.name'
+            )
+            ->from('post_tags')
+            ->join('tags', 'LEFT')
+            ->on('tags.id', '=', 'post_tags.tag_id')
+            ->where('post_id', $data['id'])
+            ->execute()
+            ->as_array();
+        $postTags = array();
+        if (!empty($tags)) {
+            foreach ($tags as $t) {
+                $postTags[] = $t['name'];
+            }
+        }
+        $data['tag'] = implode(', ', $postTags);
         if (!empty($param['get_related_posts'])) {
             $data['related_posts'] = self::get_all(array(
                 'limit' => 4,

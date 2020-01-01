@@ -10,15 +10,13 @@ use Fuel\Core\DB;
  * @version 1.0
  * @author AnhMH
  */
-class Model_Tag extends Model_Abstract {
+class Model_Post_Tag extends Model_Abstract {
     
     /** @var array $_properties field of table */
     protected static $_properties = array(
         'id',
-        'name',
-        'slug',
-        'total_post',
-        'created'
+        'post_id',
+        'tag_id'
     );
 
     protected static $_observers = array(
@@ -33,7 +31,7 @@ class Model_Tag extends Model_Abstract {
     );
 
     /** @var array $_table_name name of table */
-    protected static $_table_name = 'tags';
+    protected static $_table_name = 'post_tags';
 
     /**
      * Add update info
@@ -47,87 +45,36 @@ class Model_Tag extends Model_Abstract {
         // Init
         $self = array();
         $isNew = false;
-        $time = time();
-        $id = !empty($param['id']) ? $param['id'] : 0;
         
-        // Check duplicate
-        $check = self::find('first', array(
+        $tag = Model_Tag::add_update2(array(
+            'name' => $param['name']
+        ));
+        
+        $self = self::find('first', array(
             'where' => array(
-                'name' => $param['name']
+                'post_id' => $param['post_id'],
+                'tag_id' => $tag['id']
             )
         ));
-        if (!empty($check) && $check['id'] != $id) {
-            self::errorDuplicate('tag_name');
-            return false;
-        }
-        
-        // Check if exist User
-        if (!empty($param['id'])) {
-            $self = self::find($param['id']);
-            if (empty($self)) {
-                self::errorNotExist('tag_id');
-                return false;
-            }
-        } else {
+        if (empty($self)) {
             $self = new self;
-            $isNew = true;
+        } else {
+            return true;
         }
         
         // Set data
-        if (!empty($param['name'])) {
-            $self->set('name', $param['name']);
-            $self->set('slug', \Lib\Str::convertURL($param['name']));
-        }
-        if ($isNew) {
-            $self->set('total_post', 0);
-            $self->set('created', $time);
-        }
+        $self->set('post_id', $param['post_id']);
+        $self->set('tag_id', $tag['id']);
         
         // Save data
         if ($self->save()) {
             if (empty($self->id)) {
                 $self->id = self::cached_object($self)->_original['id'];
             }
+            $tags = DB::select('*')->from(self::$_table_name)->where('tag_id', $tag['id'])->execute();
+            $tag->set('total_post', count($tags));
+            $tag->update();
             return $self->id;
-        }
-        
-        return false;
-    }
-    
-    /**
-     * Add update info
-     *
-     * @author AnhMH
-     * @param array $param Input data
-     * @return int|bool User ID or false if error
-     */
-    public static function add_update2($param)
-    {
-        // Init
-        $self = array();
-        $time = time();
-        
-        // Check duplicate
-        $self = self::find('first', array(
-            'where' => array(
-                'name' => $param['name']
-            )
-        ));
-        if (empty($self)) {
-            $self = new self;
-        } else {
-            return $self;
-        }
-        
-        // Set data
-        $self->set('name', $param['name']);
-        $self->set('slug', \Lib\Str::convertURL($param['name']));
-        $self->set('total_post', 0);
-        $self->set('created', $time);
-        
-        // Save data
-        if ($self->save()) {
-            return $self;
         }
         
         return false;

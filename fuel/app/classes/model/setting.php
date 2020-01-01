@@ -112,7 +112,7 @@ class Model_Setting extends Model_Abstract {
         $cates = DB::select('*')->from('cates')->where('disable', 0)->execute();
         $result['cate_count'] = count($cates);
         
-        $tags = DB::select('*')->from('tags')->where('disable', 0)->execute();
+        $tags = DB::select('*')->from('tags')->execute();
         $result['tag_count'] = count($tags);
         
         // Return
