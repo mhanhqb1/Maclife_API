@@ -327,15 +327,6 @@ class Model_Post extends Model_Abstract {
             }
             $query->where(self::$_table_name.'.cate_id', 'IN', $param['cate_id']);
         }
-        if (isset($param['is_hot']) && $param['is_hot'] != '') {
-            $query->where(self::$_table_name.'.is_hot', $param['is_hot']);
-        }
-        if (isset($param['is_home_slide']) && $param['is_home_slide'] != '') {
-            $query->where(self::$_table_name.'.is_home_slide', $param['is_home_slide']);
-        }
-        if (isset($param['type']) && $param['type'] != '') {
-            $query->where(self::$_table_name.'.type', $param['type']);
-        }
         
         // Pagination
         if (!empty($param['page']) && $param['limit']) {

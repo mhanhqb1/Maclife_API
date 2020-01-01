@@ -60,6 +60,12 @@ class Model_Setting extends Model_Abstract {
         
         // Get cates
         $result['cates'] = Model_Cate::get_all(array());
+        
+        // Get top like
+        $result['top_like_posts'] = Model_Post::get_all(array(
+            'limit' => 4,
+            'sort' => 'total_like-desc'
+        ));
                 
         // Return
         return $result;
