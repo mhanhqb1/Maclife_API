@@ -48,6 +48,18 @@ class Model_Tag extends Model_Abstract {
         $self = array();
         $isNew = false;
         $time = time();
+        $id = !empty($param['id']) ? $param['id'] : 0;
+        
+        // Check duplicate
+        $check = self::find('first', array(
+            'where' => array(
+                'name' => $param['name']
+            )
+        ));
+        if (!empty($check) && $check['id'] != $id) {
+            self::errorDuplicate('tag_name');
+            return false;
+        }
         
         // Check if exist User
         if (!empty($param['id'])) {
@@ -67,6 +79,7 @@ class Model_Tag extends Model_Abstract {
             $self->set('slug', \Lib\Str::convertURL($param['name']));
         }
         if ($isNew) {
+            $self->set('total_post', 0);
             $self->set('created', $time);
         }
         

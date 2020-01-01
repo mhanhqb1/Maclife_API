@@ -83,6 +83,10 @@ class Model_Setting extends Model_Abstract {
         // Init
         $result = array();
         $result['home_posts'] = Model_Post::get_list($param);
+        $result['home_tags'] = Model_Tag::get_all(array(
+            'limit' => 10,
+            'sort' => 'total_post-desc'
+        ));
                 
         // Return
         return $result;
