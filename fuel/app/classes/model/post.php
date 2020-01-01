@@ -223,7 +223,7 @@ class Model_Post extends Model_Abstract {
     public static function get_detail($param)
     {
         $id = !empty($param['id']) ? $param['id'] : '';
-        $url = !empty($param['url']) ? $param['url'] : '';
+        $slug = !empty($param['slug']) ? $param['slug'] : '';
         
         $query = DB::select(
                 self::$_table_name.'.*',
@@ -233,10 +233,9 @@ class Model_Post extends Model_Abstract {
             ->from(self::$_table_name)
             ->join('cates', 'LEFT')
             ->on('cates.id', '=', self::$_table_name.'.cate_id')
-            ->where(self::$_table_name.'.disable', 0)
         ;
-        if (!empty($url)) {
-            $query->where(self::$_table_name.'.url', $url);
+        if (!empty($slug)) {
+            $query->where(self::$_table_name.'.slug', $slug);
         } else {
             $query->where(self::$_table_name.'.id', $id);
         }
