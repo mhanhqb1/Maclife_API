@@ -334,6 +334,8 @@ return array(
             'posts/list',
             'posts/detail',
             'posts/addview',
+            'posts/addlike',
+            'posts/adddislike',
             'orders/addupdate',
             'contacts/addupdate',
             'pages/detail'

@@ -450,4 +450,48 @@ class Model_Post extends Model_Abstract {
         }
         return true;
     }
+    
+    /**
+     * Add like
+     *
+     * @author AnhMH
+     * @param array $param Input data
+     * @return array|bool
+     */
+    public static function add_like($param)
+    {
+        $id = !empty($param['id']) ? $param['id'] : '';
+        if (!empty($id)) {
+            $post = self::find($id);
+            if (!empty($post)) {
+                $view = $post['total_like'] + 1;
+                $post->set('total_like', $view);
+                $post->save();
+                return $post;
+            }
+        }
+        return true;
+    }
+    
+    /**
+     * Add dislike
+     *
+     * @author AnhMH
+     * @param array $param Input data
+     * @return array|bool
+     */
+    public static function add_dislike($param)
+    {
+        $id = !empty($param['id']) ? $param['id'] : '';
+        if (!empty($id)) {
+            $post = self::find($id);
+            if (!empty($post)) {
+                $view = $post['total_dislike'] + 1;
+                $post->set('total_dislike', $view);
+                $post->save();
+                return $post;
+            }
+        }
+        return array();
+    }
 }

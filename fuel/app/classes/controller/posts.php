@@ -59,4 +59,18 @@ class Controller_Posts extends \Controller_App {
     public function action_addview() {
         return \Bus\Posts_AddView::getInstance()->execute();
     }
+    
+    /**
+     * Get home data
+     */
+    public function action_addlike() {
+        return \Bus\Posts_AddLike::getInstance()->execute();
+    }
+    
+    /**
+     * Get home data
+     */
+    public function action_adddislike() {
+        return \Bus\Posts_AddDislike::getInstance()->execute();
+    }
 }
