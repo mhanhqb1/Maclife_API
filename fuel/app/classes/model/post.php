@@ -245,10 +245,12 @@ class Model_Post extends Model_Abstract {
             return false;
         }
         
-        if (!empty($param['get_new_posts'])) {
-            $data['new_posts'] = self::get_all(array(
+        if (!empty($param['get_related_posts'])) {
+            $data['related_posts'] = self::get_all(array(
                 'limit' => 4,
-                'page' => 1
+                'page' => 1,
+                'cate_id' => $data['cate_id'],
+                'diff_id' => $data['id']
             ));
         }
         
@@ -341,6 +343,9 @@ class Model_Post extends Model_Abstract {
                 $param['cate_id'] = explode(',', $param['cate_id']);
             }
             $query->where(self::$_table_name.'.cate_id', 'IN', $param['cate_id']);
+        }
+        if (!empty($param['diff_id'])) {
+            $query->where(self::$_table_name.'.id', '!=', $param['diff_id']);
         }
         
         // Pagination
