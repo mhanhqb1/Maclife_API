@@ -254,7 +254,8 @@ class Model_Post extends Model_Abstract {
             return false;
         }
         $tags = DB::select(
-                'tags.name'
+                'tags.name',
+                'tags.slug'
             )
             ->from('post_tags')
             ->join('tags', 'LEFT')
@@ -268,6 +269,7 @@ class Model_Post extends Model_Abstract {
                 $postTags[] = $t['name'];
             }
         }
+        $data['front_tags'] = $tags;
         $data['tag'] = implode(', ', $postTags);
         if (!empty($param['get_related_posts'])) {
             $data['related_posts'] = self::get_all(array(
