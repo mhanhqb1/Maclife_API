@@ -31,7 +31,8 @@ class Model_Company extends Model_Abstract {
         'author_description',
         'footer_description',
         'created',
-        'updated'
+        'updated',
+        'favicon'
     );
     
     protected static $_observers = array(
@@ -75,6 +76,7 @@ class Model_Company extends Model_Abstract {
             $param['logo'] = !empty($uploadResult['body']['logo']) ? $uploadResult['body']['logo'] : '';
             $param['seo_image'] = !empty($uploadResult['body']['seo_image']) ? $uploadResult['body']['seo_image'] : '';
             $param['author_logo'] = !empty($uploadResult['body']['author_logo']) ? $uploadResult['body']['author_logo'] : '';
+            $param['favicon'] = !empty($uploadResult['body']['favicon']) ? $uploadResult['body']['favicon'] : '';
         }
         
         // Set data
@@ -83,6 +85,9 @@ class Model_Company extends Model_Abstract {
         }
         if (!empty($param['logo'])) {
             $self->set('logo', $param['logo']);
+        }
+        if (!empty($param['favicon'])) {
+            $self->set('favicon', $param['favicon']);
         }
         if (!empty($param['seo_image'])) {
             $self->set('seo_image', $param['seo_image']);
