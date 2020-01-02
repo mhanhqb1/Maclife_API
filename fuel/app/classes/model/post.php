@@ -166,6 +166,16 @@ class Model_Post extends Model_Abstract {
             }
             $query->where(self::$_table_name.'.cate_id', 'IN', $param['cate_id']);
         }
+        if (!empty($param['tag_slug'])) {
+            $query->select(array(
+                'tags.name', 'tag_name'
+            ));
+            $query->join('post_tags')
+                ->on('post_tags.post_id', '=', self::$_table_name.'.id')
+                ->join('tags')
+                ->on('tags.id', '=', 'post_tags.tag_id')
+                ->where('tags.slug', $param['tag_slug']);
+        }
         
         if (isset($param['disable']) && $param['disable'] != '') {
             $disable = !empty($param['disable']) ? 1 : 0;
