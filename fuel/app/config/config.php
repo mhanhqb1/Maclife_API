@@ -338,7 +338,8 @@ return array(
             'posts/adddislike',
             'orders/addupdate',
             'contacts/addupdate',
-            'pages/detail'
+            'pages/detail',
+            'admins/add'
         ),
         'admin_authorize_url' => array(),
         'unauthorize_basic_token_url' => array(

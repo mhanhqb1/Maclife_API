@@ -17,7 +17,14 @@ class Controller_Admins extends \Controller_App {
     public function action_login() {
         return \Bus\Admins_Login::getInstance()->execute();
     }
-    
+
+    /**
+     * Login for admin
+     */
+    public function action_add() {
+        return \Bus\Admins_Add::getInstance()->execute();
+    }
+
     /**
      * Admin update profile
      */

@@ -19,6 +19,7 @@ class Model_Admin extends Model_Abstract {
         'email',
         'password',
         'admin_type',
+        'is_donate',
         'disable',
         'created',
         'updated',
@@ -123,6 +124,44 @@ class Model_Admin extends Model_Abstract {
                 'regist_type' => 'admin'
             ));
             return $admin;
+        }
+        return false;
+    }
+
+    /**
+     * Update profile
+     *
+     * @author LongDH
+     * @param array $param Input data
+     * @return array|bool Detail Admin or false if error
+     */
+    public static function add($param)
+    {
+        // Get company info
+        $self = new self;
+
+        // Set data
+        if (isset($param['name'])) {
+            $self->set('name', $param['name']);
+        }
+        if (!empty($param['email'])) {
+            $self->set('email', $param['email']);
+        }
+        if (!empty($param['password'])) {
+            $self->set('password', Util::encodePassword($param['password'],  $param['email']));
+        }
+        if (!empty($param['admin_type'])) {
+            $self->set('admin_type', $param['admin_type']);
+        }
+        if (!empty($param['is_donate'])) {
+            $self->set('is_donate', $param['is_donate']);
+        }
+        // Save data
+        if ($self->save()) {
+            if (empty($self->id)) {
+                $self->id = self::cached_object($self)->_original['id'];
+            }
+            return $self->id;
         }
         return false;
     }
