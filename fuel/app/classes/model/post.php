@@ -105,6 +105,9 @@ class Model_Post extends Model_Abstract {
         if (!empty($param['seo_description'])) {
             $self->set('seo_description', $param['seo_description']);
         }
+        if (isset($param['is_premium'])) {
+            $self->set('is_premium', $param['is_premium']);
+        }
         $self->set('updated', $time);
         if ($isNew) {
             $self->set('created', $time);
