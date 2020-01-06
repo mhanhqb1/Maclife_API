@@ -182,7 +182,7 @@ class Model_Post extends Model_Abstract {
         }
         if (isset($param['is_premium'])) {
             $query->where('is_premium', $param['is_premium']);
-        } elseif (empty($param['is_admin'])) {
+        } elseif (empty($param['from_admin'])) {
             $query->where('is_premium', '!=', 1);
         }
         
