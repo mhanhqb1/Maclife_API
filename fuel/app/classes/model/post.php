@@ -28,7 +28,8 @@ class Model_Post extends Model_Abstract {
         'total_view',
         'created',
         'updated',
-        'disable'
+        'disable',
+        'is_premium'
     );
 
     protected static $_observers = array(
@@ -175,6 +176,11 @@ class Model_Post extends Model_Abstract {
                 ->join('tags')
                 ->on('tags.id', '=', 'post_tags.tag_id')
                 ->where('tags.slug', $param['tag_slug']);
+        }
+        if (isset($param['is_premium'])) {
+            $query->where('is_premium', $param['is_premium']);
+        } elseif (empty($param['is_admin'])) {
+            $query->where('is_premium', '!=', 1);
         }
         
         if (isset($param['disable']) && $param['disable'] != '') {
@@ -381,6 +387,7 @@ class Model_Post extends Model_Abstract {
             ->join('cates', 'LEFT')
             ->on('cates.id', '=', self::$_table_name.'.cate_id')
             ->where(self::$_table_name.'.disable', 0)
+            ->where(self::$_table_name.'.is_premium', 0)
         ;
                         
         // Filter
