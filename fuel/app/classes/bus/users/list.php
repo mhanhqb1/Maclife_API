@@ -3,31 +3,32 @@
 namespace Bus;
 
 /**
- * Login User
+ * Get list data
  *
  * @package Bus
- * @created 2017-10-28
+ * @created 2017-10-29
  * @version 1.0
- * @author LongDH
+ * @author AnhMH
  */
-class Users_AddUpdate extends BusAbstract
+class Users_List extends BusAbstract
 {
     /** @var array $_required field require */
     protected $_required = array(
-        'email',
-        'name'
+        
     );
 
     /** @var array $_length Length of fields */
-    protected $_length = array();
+    protected $_length = array(
+        
+    );
 
     /** @var array $_email_format field email */
     protected $_email_format = array(
-        'email'
+        
     );
 
     /**
-     * Call function get_login() from model User
+     * Call function get_list() from model Product
      *
      * @author AnhMH
      * @param array $data Input data
@@ -36,7 +37,7 @@ class Users_AddUpdate extends BusAbstract
     public function operateDB($data)
     {
         try {
-            $this->_response = \Model_User::add_update($data);
+            $this->_response = \Model_User::get_list($data);
             return $this->result(\Model_User::error());
         } catch (\Exception $e) {
             $this->_exception = $e;

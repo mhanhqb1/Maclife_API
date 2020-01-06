@@ -24,4 +24,25 @@ class Controller_Users extends \Controller_App {
     public function action_addupdate() {
         return \Bus\Users_AddUpdate::getInstance()->execute();
     }
+    
+    /**
+     * Get list
+     */
+    public function action_list() {
+        return \Bus\Users_List::getInstance()->execute();
+    }
+    
+    /**
+     * Disable
+     */
+    public function action_disable() {
+        return \Bus\Users_Disable::getInstance()->execute();
+    }
+    
+    /**
+     * Get list
+     */
+    public function action_detail() {
+        return \Bus\Users_Detail::getInstance()->execute();
+    }
 }
