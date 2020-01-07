@@ -75,6 +75,9 @@ class Model_Cate extends Model_Abstract {
             }
             $self->set('parent_id', $param['parent_id']);
         }
+        if (isset($param['position'])) {
+            $self->set('position', $param['position']);
+        }
         $self->set('updated', $time);
         if ($isNew) {
             $self->set('created', $time);
