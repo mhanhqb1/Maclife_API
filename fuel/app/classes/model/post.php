@@ -186,8 +186,6 @@ class Model_Post extends Model_Abstract {
         }
         if (isset($param['is_premium'])) {
             $query->where('is_premium', $param['is_premium']);
-        } elseif (empty($param['from_admin'])) {
-            $query->where('is_premium', '!=', 1);
         }
         
         if (isset($param['disable']) && $param['disable'] != '') {
@@ -394,7 +392,6 @@ class Model_Post extends Model_Abstract {
             ->join('cates', 'LEFT')
             ->on('cates.id', '=', self::$_table_name.'.cate_id')
             ->where(self::$_table_name.'.disable', 0)
-            ->where(self::$_table_name.'.is_premium', 0)
         ;
                         
         // Filter
