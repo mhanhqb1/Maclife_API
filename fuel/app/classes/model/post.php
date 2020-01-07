@@ -29,7 +29,8 @@ class Model_Post extends Model_Abstract {
         'created',
         'updated',
         'disable',
-        'is_premium'
+        'is_premium',
+        'premium_content'
     );
 
     protected static $_observers = array(
@@ -107,6 +108,9 @@ class Model_Post extends Model_Abstract {
         }
         if (isset($param['is_premium'])) {
             $self->set('is_premium', $param['is_premium']);
+        }
+        if (isset($param['premium_content'])) {
+            $self->set('premium_content', $param['premium_content']);
         }
         $self->set('updated', $time);
         if ($isNew) {
