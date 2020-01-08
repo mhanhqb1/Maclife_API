@@ -122,11 +122,14 @@ class Model_Post extends Model_Abstract {
             if (empty($self->id)) {
                 $self->id = self::cached_object($self)->_original['id'];
             }
-            if (!empty($param['tag'])) {
-                $tags = explode(',', $param['tag']);
+            if (!empty($param['tags'])) {
+                $delete = self::deleteRow('post_tags', array(
+                    'post_id' => $self->id
+                ));
+                $tags = explode(',', $param['tags']);
                 foreach ($tags as $t) {
                     Model_Post_Tag::add_update(array(
-                        'name' => trim($t),
+                        'tag_id' => trim($t),
                         'post_id' => $self->id
                     ));
                 }
@@ -276,7 +279,8 @@ class Model_Post extends Model_Abstract {
         }
         $tags = DB::select(
                 'tags.name',
-                'tags.slug'
+                'tags.slug',
+                'tags.id'
             )
             ->from('post_tags')
             ->join('tags', 'LEFT')
@@ -287,11 +291,11 @@ class Model_Post extends Model_Abstract {
         $postTags = array();
         if (!empty($tags)) {
             foreach ($tags as $t) {
-                $postTags[] = $t['name'];
+                $postTags[] = $t['id'];
             }
         }
         $data['front_tags'] = $tags;
-        $data['tag'] = implode(', ', $postTags);
+        $data['tag'] = $postTags;
         if (!empty($param['get_related_posts'])) {
             $data['related_posts'] = self::get_all(array(
                 'limit' => 4,

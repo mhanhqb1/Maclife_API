@@ -46,22 +46,20 @@ class Model_Post_Tag extends Model_Abstract {
         $self = array();
         $isNew = false;
         
-        $tag = Model_Tag::add_update2(array(
-            'name' => $param['name']
-        ));
+        $tag = Model_Tag::find($param['tag_id']);
         
-        $self = self::find('first', array(
-            'where' => array(
-                'post_id' => $param['post_id'],
-                'tag_id' => $tag['id']
-            )
-        ));
-        if (empty($self)) {
-            $self = new self;
-        } else {
-            return true;
-        }
-        
+//        $self = self::find('first', array(
+//            'where' => array(
+//                'post_id' => $param['post_id'],
+//                'tag_id' => $param['tag_id']
+//            )
+//        ));
+//        if (empty($self)) {
+//            $self = new self;
+//        } else {
+//            return true;
+//        }
+        $self = new self;
         // Set data
         $self->set('post_id', $param['post_id']);
         $self->set('tag_id', $tag['id']);
