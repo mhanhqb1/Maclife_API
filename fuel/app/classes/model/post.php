@@ -122,10 +122,11 @@ class Model_Post extends Model_Abstract {
             if (empty($self->id)) {
                 $self->id = self::cached_object($self)->_original['id'];
             }
+            // Reset post tags
+            $delete = self::deleteRow('post_tags', array(
+                'post_id' => $self->id
+            ));
             if (!empty($param['tags'])) {
-                $delete = self::deleteRow('post_tags', array(
-                    'post_id' => $self->id
-                ));
                 $tags = explode(',', $param['tags']);
                 foreach ($tags as $t) {
                     Model_Post_Tag::add_update(array(
