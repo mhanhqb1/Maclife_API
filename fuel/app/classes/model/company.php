@@ -32,7 +32,8 @@ class Model_Company extends Model_Abstract {
         'footer_description',
         'created',
         'updated',
-        'favicon'
+        'favicon',
+        'header_bg_image'
     );
     
     protected static $_observers = array(
@@ -77,6 +78,7 @@ class Model_Company extends Model_Abstract {
             $param['seo_image'] = !empty($uploadResult['body']['seo_image']) ? $uploadResult['body']['seo_image'] : '';
             $param['author_logo'] = !empty($uploadResult['body']['author_logo']) ? $uploadResult['body']['author_logo'] : '';
             $param['favicon'] = !empty($uploadResult['body']['favicon']) ? $uploadResult['body']['favicon'] : '';
+            $param['header_bg_image'] = !empty($uploadResult['body']['header_bg_image']) ? $uploadResult['body']['header_bg_image'] : '';
         }
         
         // Set data
@@ -88,6 +90,9 @@ class Model_Company extends Model_Abstract {
         }
         if (!empty($param['favicon'])) {
             $self->set('favicon', $param['favicon']);
+        }
+        if (!empty($param['header_bg_image'])) {
+            $self->set('header_bg_image', $param['header_bg_image']);
         }
         if (!empty($param['seo_image'])) {
             $self->set('seo_image', $param['seo_image']);
