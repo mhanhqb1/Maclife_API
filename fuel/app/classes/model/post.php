@@ -273,7 +273,8 @@ class Model_Post extends Model_Abstract {
         $query = DB::select(
                 self::$_table_name.'.*',
                 array('cates.name', 'cate_name'),
-                array('cates.slug', 'cate_slug')
+                array('cates.slug', 'cate_slug'),
+                array('cates.parent_id', 'cate_parent_id')
             )
             ->from(self::$_table_name)
             ->join('cates', 'LEFT')
