@@ -60,6 +60,17 @@ class Model_Post extends Model_Abstract {
         $self = array();
         $isNew = false;
         $time = time();
+        $id = !empty($param['id']) ? $param['id'] : 0;
+        
+        $check = self::find('first', array(
+            'where' => array(
+                'name' => $param['name']
+            )
+        ));
+        if (!empty($check) && $check['id'] != $id) {
+            self::errorDuplicate('post_name');
+            return false;
+        }
         
         // Check if exist User
         if (!empty($param['id'])) {
