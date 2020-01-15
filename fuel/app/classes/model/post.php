@@ -123,6 +123,9 @@ class Model_Post extends Model_Abstract {
         if (isset($param['premium_content'])) {
             $self->set('premium_content', $param['premium_content']);
         }
+        if (isset($param['disable'])) {
+            $self->set('disable', $param['disable']);
+        }
         $self->set('updated', $time);
         if ($isNew) {
             $self->set('created', $time);
