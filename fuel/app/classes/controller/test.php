@@ -22,6 +22,19 @@ class Controller_Test extends \Controller_Rest {
         exit;
     }
     
+    public function action_updatecate() {
+        $data = Model_Post::find('all');
+        foreach ($data as $v) {
+            if (!empty($v['cate_id'])){
+                Model_Post_Cate::add_update(array(
+                    'cate_id' => $v['cate_id'],
+                    'post_id' => $v['id']
+                ));
+            }
+        }
+        exit;
+    }
+    
     /**
      * Show PHP info
      */
