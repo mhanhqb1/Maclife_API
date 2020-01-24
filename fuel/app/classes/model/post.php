@@ -149,6 +149,19 @@ class Model_Post extends Model_Abstract {
                     ));
                 }
             }
+            // Reset post tags
+            $delete = self::deleteRow('post_cates', array(
+                'post_id' => $self->id
+            ));
+            if (!empty($param['cate_id'])) {
+                $cateIds = explode(',', $param['cate_id']);
+                foreach ($cateIds as $c) {
+                    Model_Post_Cate::add_update(array(
+                        'cate_id' => trim($c),
+                        'post_id' => $self->id
+                    ));
+                }
+            }
             return $self->id;
         }
         
@@ -312,6 +325,21 @@ class Model_Post extends Model_Abstract {
         }
         $data['front_tags'] = $tags;
         $data['tag'] = $postTags;
+        
+        $cateIds = DB::select(
+                'post_cates.cate_id'
+            )
+            ->from('post_cates')
+            ->where('post_id', $data['id'])
+            ->execute()
+            ->as_array();
+        $postCates = array();
+        if (!empty($cateIds)) {
+            foreach ($cateIds as $t) {
+                $postCates[] = $t['cate_id'];
+            }
+        }
+        $data['cate_id'] = $postCates;
         if (!empty($param['get_related_posts'])) {
             $data['related_posts'] = self::get_all(array(
                 'limit' => 4,
