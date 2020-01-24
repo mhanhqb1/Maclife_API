@@ -188,8 +188,11 @@ class Model_Post extends Model_Abstract {
                 array('cates.slug', 'cate_slug')
             )
             ->from(self::$_table_name)
+            ->join('post_cates', 'left')
+            ->on(self::$_table_name.'.id', '=', 'post_cates.post_id')
             ->join('cates', 'left')
-            ->on('cates.id', '=', self::$_table_name.'.cate_id')
+            ->on('cates.id', '=', 'post_cates.cate_id')
+            ->group_by(self::$_table_name.'.id')
         ;
                         
         // Filter
@@ -203,7 +206,7 @@ class Model_Post extends Model_Abstract {
             if (!is_array($param['cate_id'])) {
                 $param['cate_id'] = explode(',', $param['cate_id']);
             }
-            $query->where(self::$_table_name.'.cate_id', 'IN', $param['cate_id']);
+            $query->where('post_cates.cate_id', 'IN', $param['cate_id']);
         }
         if (!empty($param['tag_slug'])) {
             $query->select(array(
@@ -293,8 +296,11 @@ class Model_Post extends Model_Abstract {
                 array('cates.parent_id', 'cate_parent_id')
             )
             ->from(self::$_table_name)
-            ->join('cates', 'LEFT')
-            ->on('cates.id', '=', self::$_table_name.'.cate_id')
+            ->join('post_cates', 'left')
+            ->on(self::$_table_name.'.id', '=', 'post_cates.post_id')
+            ->join('cates', 'left')
+            ->on('cates.id', '=', 'post_cates.cate_id')
+            ->group_by(self::$_table_name.'.id')
         ;
         if (!empty($slug)) {
             $query->where(self::$_table_name.'.slug', $slug);
@@ -327,12 +333,17 @@ class Model_Post extends Model_Abstract {
         $data['tag'] = $postTags;
         
         $cateIds = DB::select(
-                'post_cates.cate_id'
+                'post_cates.cate_id',
+                array('cates.name', 'cate_name'),
+                array('cates.slug', 'cate_slug')
             )
             ->from('post_cates')
+            ->join('cates', 'LEFT')
+            ->on('cates.id', '=', 'post_cates.cate_id')
             ->where('post_id', $data['id'])
             ->execute()
             ->as_array();
+        $data['front_cates'] = $cateIds;
         $postCates = array();
         if (!empty($cateIds)) {
             foreach ($cateIds as $t) {
