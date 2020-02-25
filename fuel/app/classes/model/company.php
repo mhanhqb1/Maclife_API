@@ -33,7 +33,9 @@ class Model_Company extends Model_Abstract {
         'created',
         'updated',
         'favicon',
-        'header_bg_image'
+        'header_bg_image',
+        'logo_width',
+        'logo_height'
     );
     
     protected static $_observers = array(
@@ -87,6 +89,12 @@ class Model_Company extends Model_Abstract {
         }
         if (!empty($param['logo'])) {
             $self->set('logo', $param['logo']);
+        }
+        if (isset($param['logo_width'])) {
+            $self->set('logo_width', $param['logo_width']);
+        }
+        if (isset($param['logo_height'])) {
+            $self->set('logo_height', $param['logo_height']);
         }
         if (!empty($param['favicon'])) {
             $self->set('favicon', $param['favicon']);
