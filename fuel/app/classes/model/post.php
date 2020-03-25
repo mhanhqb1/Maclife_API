@@ -99,9 +99,9 @@ class Model_Post extends Model_Abstract {
             $self->set('name', $param['name']);
             $self->set('slug', \Lib\Str::convertURL($param['name']));
         }
-        if (!empty($param['cate_id'])) {
-            $self->set('cate_id', $param['cate_id']);
-        }
+//        if (!empty($param['cate_id'])) {
+//            $self->set('cate_id', $param['cate_id']);
+//        }
         if (!empty($param['description'])) {
             $self->set('description', $param['description']);
         }
