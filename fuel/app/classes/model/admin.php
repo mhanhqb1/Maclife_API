@@ -47,7 +47,7 @@ class Model_Admin extends Model_Abstract {
      */
     public static function login($param) {
         $param['password'] = Util::encodePassword($param['password'], $param['email']);
-        \LogLib::info('Create new token', __METHOD__, $param);
+//        \LogLib::info('Create new token', __METHOD__, $param);
         $query = DB::select(
                 self::$_table_name . '.*'
             )

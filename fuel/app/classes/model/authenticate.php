@@ -54,7 +54,7 @@ class Model_Authenticate extends Model_Abstract {
         $data = $query->execute()->as_array();
         $authenticate = !empty($data[0]) ? $data[0] : array();
         if (empty($authenticate['id'])) {
-            \LogLib::info('Create new token', __METHOD__, $param);
+//            \LogLib::info('Create new token', __METHOD__, $param);
             $token = \Lib\Str::generate_token_for_api();
             $auth = new self;
             $auth->set('user_id', $param['user_id']);
@@ -69,7 +69,7 @@ class Model_Authenticate extends Model_Abstract {
             $auth->set('expire_date', \Config::get('api_token_expire'));
             $token = $authenticate['token'];
             if ($authenticate['expire_date'] < $authenticate['systime']) {
-                \LogLib::info('Update new token', __METHOD__, $param);
+//                \LogLib::info('Update new token', __METHOD__, $param);
                 $token = \Lib\Str::generate_token_for_api();
                 $auth->set('token', $token);
             }
